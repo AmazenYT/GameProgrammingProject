@@ -35,7 +35,14 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource runSource;
     public AudioClip jumpSound;
     public AudioClip runningSound;
+    public AudioSource spearSource;
+    public AudioClip spearSound;
     
+    //Chaos Spear Variables
+    public GameObject chaosSpearPrefab;
+    public Transform spearSpawnPoint;
+    public Camera mainCamera;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -69,6 +76,12 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
+
+        //Chaos Spear can be activated while moving, will fire a projectile at where mouse is pointing at
+        if (Input.GetMouseButtonDown(0)) 
+            {
+                FireChaosSpear();
+            }
 
         UpdateAnimator();
     }
@@ -152,6 +165,28 @@ public class PlayerMovement : MonoBehaviour
         animator.SetTrigger("Jump");
         if (jumpSource) jumpSource.PlayOneShot(jumpSound);
     }
+
+    private void FireChaosSpear()
+    {
+     Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+     RaycastHit hit;
+
+        Vector3 targetPoint;
+
+        if (Physics.Raycast(ray, out hit))
+            {
+             targetPoint = hit.point;
+            }
+        else
+            {
+             targetPoint = ray.GetPoint(100f); 
+            }
+
+            Vector3 direction = (targetPoint - spearSpawnPoint.position).normalized;
+
+            GameObject spear = Instantiate(chaosSpearPrefab, spearSpawnPoint.position, Quaternion.LookRotation(direction));
+            if (spearSource) spearSource.PlayOneShot(spearSound);
+}   
 
     private void UpdateAnimator()
     {
