@@ -55,13 +55,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         grounded = Physics.Raycast(rayOrigin, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
 
-        // Resets jump if Sonic is on the ground
+        // Resets jump if Shadow is on the ground
         if (grounded)
         {
             hasJumped = false;
         }
 
-        // Slows Sonic down when on the ground and not moving to reach a halt
+        // Slows Shadow down when on the ground and not moving to reach a halt
         rb.linearDamping = grounded ? groundDamping : 0f;
 
         // Jump will only activate when grounded and space bar is pressed
@@ -158,7 +158,6 @@ public class PlayerMovement : MonoBehaviour
         float speedPercent = grounded ? currentSpeed / maxSpeed : 0f;
         animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), speedPercent, Time.deltaTime * 5f));
         animator.SetBool("Grounded", grounded);
-        animator.SetFloat("Jumping", rb.linearVelocity.y);
     }
 
     //Slope Check
