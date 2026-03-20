@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ChaosSpear : MonoBehaviour
 {
     public float speed = 40f;

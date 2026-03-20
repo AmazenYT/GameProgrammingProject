@@ -37,17 +37,24 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip runningSound;
     public AudioSource spearSource;
     public AudioClip spearSound;
+    public AudioSource ringSource;
+    public AudioClip ringSound;
     
     //Chaos Spear Variables
     public GameObject chaosSpearPrefab;
     public Transform spearSpawnPoint;
     public Camera mainCamera;
 
+    //Data Stuff
+    public MB_GameManager gameManager;
+    public RingManager ringManager;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
        
     }
 
@@ -81,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) 
             {
                 FireChaosSpear();
+            }
+
+        if (gameManager != null)
+            {
+                gameManager.gameStatus.playerPosition = transform.position;
             }
 
         UpdateAnimator();
@@ -205,5 +217,23 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+
+    void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("Ring"))
+    {
+        ringSource.PlayOneShot(ringSound);
+        ringManager.ringCount++;
+
+        
+        if (gameManager != null)
+        {
+            gameManager.gameStatus.ringsCollected = ringManager.ringCount;
+            gameManager.SaveGameStatus();  
+        }
+
+        Destroy(other.gameObject);
+    }
+}
     
 }
