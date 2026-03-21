@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02947e3cfa5e85446879ad94f11d988c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyScript
+  gameManager: {fileID: 512624372}
   waitTimeOnWayPoint: 1
   path: {fileID: 49391915}
   detectionRange: 8
@@ -1237,10 +1238,10 @@ MonoBehaviour:
   gameStatus:
     playerName: 
     currentLevel: 0
-    spawnPoint: 
     ringsCollected: 0
-    NPCS: []
+    npcPositions: []
     playerPosition: {x: 0, y: 0, z: 0}
+    npcCount: 0
 --- !u!4 &512624373
 Transform:
   m_ObjectHideFlags: 0

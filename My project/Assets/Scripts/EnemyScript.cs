@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
+    public MB_GameManager gameManager;
     //Enemy States
      public enum EnemyState
     {

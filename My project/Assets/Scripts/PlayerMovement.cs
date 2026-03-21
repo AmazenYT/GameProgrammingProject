@@ -54,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
+        gameManager.gameStatus.playerName = "Frankie";
+        gameManager.gameStatus.currentLevel++;
        
     }
 
