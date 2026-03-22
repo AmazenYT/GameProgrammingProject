@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     //Player Movement Variables
@@ -14,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     private bool isMoving = false; 
     private bool hasJumped = false;
-
+    public Transform spawnPoint;
     //Slope Variables
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
@@ -48,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
     //Data Stuff
     public MB_GameManager gameManager;
     public RingManager ringManager;
+    public PlayerLivesSO playerLives;
+    public int startingLives;
 
     void Start()
     {
@@ -56,7 +59,10 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         gameManager.gameStatus.playerName = "Frankie";
         gameManager.gameStatus.currentLevel++;
-       
+       if (playerLives.currentLives <= 0)
+        {
+            playerLives.currentLives = startingLives;
+        }
     }
 
     // Update is called once per frame
@@ -219,6 +225,45 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    //Player Death
+    public void Dead()
+{
+    if (playerLives == null) return;
+
+    playerLives.currentLives--;
+
+    Debug.Log("Player Died! Lives left: " + playerLives.currentLives);
+
+    if (playerLives.currentLives <= 0)
+    {
+        GameOver();
+    }
+    else
+    {
+        Respawn();
+    }
+}
+
+    private void Respawn()
+    {
+        transform.position = spawnPoint.position;
+        rb.linearVelocity = Vector3.zero;
+    }
+
+    private void GameOver()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    void OnCollisionEnter(Collision collision)
+{
+    if (collision.gameObject.CompareTag("Kill"))
+    {
+        Dead();
+    }
+}
+
     void OnTriggerEnter(Collider other)
 {
     if (other.gameObject.CompareTag("Ring"))
@@ -236,5 +281,7 @@ public class PlayerMovement : MonoBehaviour
         Destroy(other.gameObject);
     }
 }
+
+
     
 }
