@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     //Player Movement Variables
     public Rigidbody rb;
@@ -51,6 +52,15 @@ public class PlayerMovement : MonoBehaviour
     public RingManager ringManager;
     public PlayerLivesSO playerLives;
     public int startingLives;
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            enabled = false;
+            return;
+        }
+    }
 
     void Start()
     {
