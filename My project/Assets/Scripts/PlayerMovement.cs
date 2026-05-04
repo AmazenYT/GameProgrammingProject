@@ -268,7 +268,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void OnCollisionEnter(Collision collision)
 {
-    if (collision.gameObject.CompareTag("Kill"))
+    if (collision.gameObject.CompareTag("Kill")) //||collision.gameObject.CompareTag("Player") && hasJumped;)//
     {
         Dead();
     }
