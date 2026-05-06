@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyScript
   ShowTopMostFoldoutHeaderGroup: 1
-  gameManager: {fileID: 512624372}
+  gameManager: {fileID: 0}
   waitTimeOnWayPoint: 1
   path: {fileID: 49391915}
   detectionRange: 8
@@ -684,8 +684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049f7c2d4965eab4badb7f203ed8ca88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HostClientUI
-  hostButton: {fileID: 199646512}
-  clientButton: {fileID: 0}
+  hostButton: {fileID: 105994069}
+  clientButton: {fileID: 199646512}
 --- !u!114 &199646512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,17 +1543,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &512624372 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8364514315858333884, guid: 834a771cd32086348b4ad8b99aad9f79, type: 3}
+--- !u!1 &562939479 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2463224207167531817, guid: 834a771cd32086348b4ad8b99aad9f79, type: 3}
   m_PrefabInstance: {fileID: 2959218193716639998}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &562939481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562939479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 141851821
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &562939482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562939479}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f95dad0ba8c5f408b6d2431d02d0a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MB_GameManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  gameStatus:
+    playerName: 
+    currentLevel: 0
+    ringsCollected: 0
+    npcPositions: []
+    playerPosition: {x: 0, y: 0, z: 0}
+    npcCount: 0
 --- !u!1 &656276524
 GameObject:
   m_ObjectHideFlags: 0
@@ -4184,6 +4223,10 @@ PrefabInstance:
       propertyPath: ringText
       value: 
       objectReference: {fileID: 482942588}
+    - target: {fileID: 2914972665777535859, guid: b97d9293a6ae64241848471c2962e7d8, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4078645081325012872, guid: b97d9293a6ae64241848471c2962e7d8, type: 3}
       propertyPath: m_Name
       value: RingManager
@@ -4245,10 +4288,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8364514315858333884, guid: 834a771cd32086348b4ad8b99aad9f79, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2463224207167531817, guid: 834a771cd32086348b4ad8b99aad9f79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 562939481}
+    - targetCorrespondingSourceObject: {fileID: 2463224207167531817, guid: 834a771cd32086348b4ad8b99aad9f79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 562939482}
   m_SourcePrefab: {fileID: 100100000, guid: 834a771cd32086348b4ad8b99aad9f79, type: 3}
 --- !u!1001 &3846290914612970244
 PrefabInstance:

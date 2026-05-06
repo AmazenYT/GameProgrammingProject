@@ -53,10 +53,14 @@ public class PlayerMovement : NetworkBehaviour
     public PlayerLivesSO playerLives;
     public int startingLives;
 
-    public override void OnNetworkSpawn()
+   public override void OnNetworkSpawn()
+{
+    if (IsServer)
     {
-        
+        gameManager.gameStatus.playerName = "Frankie";
+        gameManager.gameStatus.currentLevel = 1; 
     }
+}
 
     void Start()
     {
@@ -102,16 +106,17 @@ public class PlayerMovement : NetworkBehaviour
             Jump();
         }
 
-        //Chaos Spear can be activated while moving, will fire a projectile at where mouse is pointing at
+        
         if (Input.GetMouseButtonDown(0)) 
             {
                 FireChaosSpear();
             }
 
-        if (gameManager != null)
-            {
-                gameManager.gameStatus.playerPosition = transform.position;
-            }
+        
+        if (IsServer && IsOwner && gameManager != null)
+        {
+            gameManager.gameStatus.playerPosition = transform.position;
+        }
 
         UpdateAnimator();
     }
@@ -275,25 +280,24 @@ public class PlayerMovement : NetworkBehaviour
     }
 }
 
-    void OnTriggerEnter(Collider other)
+ void OnTriggerEnter(Collider other)
 {
-    if (other.gameObject.CompareTag("Ring"))
-    {
+    if (!other.CompareTag("Ring")) return;
+    if (IsOwner && ringSource && ringSound)
         ringSource.PlayOneShot(ringSound);
-        ringManager.ringCount++;
-
-        var netObj = other.GetComponent<NetworkObject>();
-
-    if (netObj != null && netObj.IsSpawned)
-        netObj.Despawn(true);
+    if (IsServer)
+    {
+        gameManager.gameStatus.ringsCollected++;
         
-        if (gameManager != null)
-        {
-            gameManager.gameStatus.ringsCollected = ringManager.ringCount;
-            gameManager.SaveGameStatus();  
-        }
-
-        Destroy(other.gameObject);
+        
+        gameManager.SaveGameStatus(); 
     }
-}    
+
+    if (IsServer)
+    {
+        var netObj = other.GetComponent<NetworkObject>();
+        if (netObj != null && netObj.IsSpawned) netObj.Despawn();
+        else Destroy(other.gameObject);
+    }
+}
 }

@@ -1,13 +1,15 @@
 using UnityEngine;
 using TMPro;
+
 public class RingManager : MonoBehaviour
 {
-    public int ringCount;
+    public MB_GameManager gameManager;
     public TextMeshProUGUI ringText;
-    
-    // Update is called once per frame
+
     void Update()
     {
-        ringText.text = "Rings: " + ringCount.ToString();
+        if (gameManager == null || ringText == null) return;
+
+        ringText.text = "Rings: " + gameManager.gameStatus.ringsCollected;
     }
 }
