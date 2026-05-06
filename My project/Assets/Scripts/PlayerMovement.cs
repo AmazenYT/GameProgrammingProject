@@ -55,11 +55,7 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner)
-        {
-            enabled = false;
-            return;
-        }
+        
     }
 
     void Start()
@@ -78,6 +74,11 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     private void Update()
     {
+
+        if (!IsOwner)
+        {
+            return;
+        }
         // Player inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -281,6 +282,10 @@ public class PlayerMovement : NetworkBehaviour
         ringSource.PlayOneShot(ringSound);
         ringManager.ringCount++;
 
+        var netObj = other.GetComponent<NetworkObject>();
+
+    if (netObj != null && netObj.IsSpawned)
+        netObj.Despawn(true);
         
         if (gameManager != null)
         {
@@ -290,8 +295,5 @@ public class PlayerMovement : NetworkBehaviour
 
         Destroy(other.gameObject);
     }
-}
-
-
-    
+}    
 }

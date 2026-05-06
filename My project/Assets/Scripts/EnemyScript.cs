@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
-
-public class EnemyScript : MonoBehaviour
+using Unity.Netcode;
+public class EnemyScript : NetworkBehaviour
 {
     public MB_GameManager gameManager;
     //Enemy States
@@ -56,6 +56,20 @@ public class EnemyScript : MonoBehaviour
 
    void Update()
     {
+
+    {
+     if (player == null)
+        {
+             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+             if (playerObj != null)
+            {
+                player = playerObj.transform;
+            }
+          return;
+    }
+
+    
+}
         switch (currentState)
         {
             case EnemyState.Patrol:
